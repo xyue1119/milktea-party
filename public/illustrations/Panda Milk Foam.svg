@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="106px" height="200px" viewBox="0 0 106 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Panda Milk Foam</title>
+    <defs>
+        <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="186.904297%" gradientTransform="translate(0.500000,0.500000),rotate(90.000000),scale(1.000000,1.009370),translate(-0.500000,-0.500000)" id="radialGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#000000" offset="100%"></stop>
+        </radialGradient>
+        <linearGradient x1="50%" y1="21.0227273%" x2="50%" y2="61.9318182%" id="linearGradient-2">
+            <stop stop-color="#F8EDFA" offset="0%"></stop>
+            <stop stop-color="#F8C896" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Panda-Milk-Foam" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Panda-Milk-Foam-" transform="translate(10.000000, 8.000000)">
+            <line x1="41" y1="77.5" x2="75" y2="0.5" id="Line" stroke="#CA3939" stroke-width="6"></line>
+            <path d="M88.8230637,75.5 L71.1503364,183.5 L18.8496636,183.5 L1.17693635,75.5 L88.8230637,75.5 Z" id="Rectangle" stroke="#444141" stroke-width="2" fill="#FCED79"></path>
+            <path d="M89,74.5 C89,49.6471863 69.300529,29.5 45,29.5 C20.699471,29.5 1,49.6471863 1,74.5" id="Path" stroke="#444141" stroke-width="2"></path>
+            <circle id="Oval-Copy-25" fill="#0C0C0C" cx="24" cy="178" r="5"></circle>
+            <circle id="Oval-Copy-26" fill="#0C0C0C" cx="32" cy="171" r="5"></circle>
+            <circle id="Oval-Copy-27" fill="#0C0C0C" cx="42" cy="177" r="5"></circle>
+            <circle id="Oval-Copy-28" fill="#0C0C0C" cx="51" cy="168" r="5"></circle>
+            <circle id="Oval-Copy-29" fill="#0C0C0C" cx="61" cy="176" r="5"></circle>
+            <circle id="Oval-Copy-30" fill="#0C0C0C" cx="69" cy="156" r="5"></circle>
+            <circle id="Oval-Copy-31" fill="#0C0C0C" cx="39" cy="159" r="5"></circle>
+            <circle id="Oval-Copy-32" fill="#0C0C0C" cx="25" cy="162" r="5"></circle>
+            <circle id="Oval-Copy-36" fill="url(#radialGradient-1)" cx="34" cy="163" r="5"></circle>
+            <circle id="Oval-Copy-37" fill="url(#radialGradient-1)" cx="23" cy="169" r="5"></circle>
+            <circle id="Oval-Copy-38" fill="url(#radialGradient-1)" cx="63" cy="162" r="5"></circle>
+            <circle id="Oval-Copy-39" fill="url(#radialGradient-1)" cx="40" cy="169" r="5"></circle>
+            <circle id="Oval-Copy-40" fill="url(#radialGradient-1)" cx="51" cy="177" r="5"></circle>
+            <circle id="Oval-Copy-41" fill="url(#radialGradient-1)" cx="33" cy="178" r="5"></circle>
+            <circle id="Oval-Copy-42" fill="url(#radialGradient-1)" cx="52" cy="159" r="5"></circle>
+            <circle id="Oval-Copy-43" fill="url(#radialGradient-1)" cx="45" cy="154" r="5"></circle>
+            <circle id="Oval-Copy-49" fill="url(#radialGradient-1)" cx="22" cy="150" r="5"></circle>
+            <circle id="Oval-Copy-50" fill="url(#radialGradient-1)" cx="66" cy="174" r="5"></circle>
+            <circle id="Oval-Copy-44" fill="url(#radialGradient-1)" cx="61" cy="152" r="5"></circle>
+            <circle id="Oval-Copy-45" fill="url(#radialGradient-1)" cx="57" cy="169" r="5"></circle>
+            <circle id="Oval-Copy-46" fill="url(#radialGradient-1)" cx="35" cy="150" r="5"></circle>
+            <circle id="Oval-Copy-47" fill="url(#radialGradient-1)" cx="21" cy="157" r="5"></circle>
+            <circle id="Oval-Copy-33" fill="#0C0C0C" cx="58" cy="160" r="5"></circle>
+            <circle id="Oval-Copy-34" fill="#0C0C0C" cx="45" cy="161" r="5"></circle>
+            <circle id="Oval-Copy-48" fill="#0C0C0C" cx="66" cy="166" r="5"></circle>
+            <circle id="Oval-Copy-35" fill="#0C0C0C" cx="30" cy="155" r="5"></circle>
+            <path d="M88.8230637,76 L71.1503364,184 L18.8496636,184 L1.17693635,76 L88.8230637,76 Z" id="Rectangle" stroke="#444141" stroke-width="2" fill="url(#linearGradient-2)" opacity="0.593005952"></path>
+            <polygon id="Rectangle" fill="#FFFBFB" points="2.49023438 76.5703125 87.659668 76.5703125 85.8452148 88.8828125 4.17724609 88.8828125"></polygon>
+            <line x1="4.5" y1="88.5" x2="85.5" y2="88.5" id="Line-2" stroke="#444141" stroke-width="2" stroke-linecap="square"></line>
+            <path d="M27,75 C31.6921777,71.7600017 35.025511,69.7592204 37,68.9976563 C38.3801538,68.4653283 40.1511055,67.7645598 42.8695313,67 C43.6499544,66.7805053 46.093444,66.4471719 50.2,66 C47.5481234,68.6279854 53.3885202,68.9248604 56.9325843,70.5 C60.4766484,72.0751396 58.9029183,74.7782646 63,75" id="Path-Copy" stroke="#444141" stroke-width="2" fill="#B0916C"></path>
+        </g>
+    </g>
+</svg>

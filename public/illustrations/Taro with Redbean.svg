@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="106px" height="200px" viewBox="0 0 106 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Taro with Redbean</title>
+    <defs>
+        <linearGradient x1="50%" y1="86.352983%" x2="50%" y2="22.8764205%" id="linearGradient-1">
+            <stop stop-color="#B38ABC" offset="0%"></stop>
+            <stop stop-color="#F0C7F9" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="26.6656426%" y1="141.776843%" x2="26.6656426%" y2="35.2864583%" id="linearGradient-2">
+            <stop stop-color="#F0C7F9" offset="0%"></stop>
+            <stop stop-color="#733434" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Taro-with-Redbean" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Taro-with-Red-Bean" transform="translate(10.000000, 8.000000)">
+            <line x1="41" y1="77.5" x2="75" y2="0.5" id="Line" stroke="#CA3939" stroke-width="6"></line>
+            <path d="M88.8230637,75.5 L71.1503364,183.5 L18.8496636,183.5 L1.17693635,75.5 L88.8230637,75.5 Z" id="Rectangle" stroke="#444141" stroke-width="2" fill="url(#linearGradient-1)"></path>
+            <path d="M89,74.5 C89,49.6471863 69.300529,29.5 45,29.5 C20.699471,29.5 1,49.6471863 1,74.5" id="Path" stroke="#444141" stroke-width="2"></path>
+            <path d="M1,74.5 C12.600106,66.4000042 10.1186245,69.538676 15,67.6347656 C18.4120469,66.3039457 28.2794473,58.8528057 35,56.9414063 C36.9293795,56.3926694 40.2773685,56.1179298 50.4296875,55 C43.8736592,61.5699635 66.2382859,59.312151 75,63.25 C83.7617141,67.187849 79.8711035,73.9456615 90,74.5" id="Path" stroke="#444141" stroke-width="2" fill="url(#linearGradient-2)"></path>
+        </g>
+    </g>
+</svg>

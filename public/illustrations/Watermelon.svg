@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="106px" height="200px" viewBox="0 0 106 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Watermelon </title>
+    <defs>
+        <linearGradient x1="50%" y1="5.68004261%" x2="50%" y2="81.6725852%" id="linearGradient-1">
+            <stop stop-color="#FEADAD" offset="0%"></stop>
+            <stop stop-color="#F7C843" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Watermelon-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(10.000000, 8.000000)">
+            <line x1="41" y1="77.5" x2="75" y2="0.5" id="Line" stroke="#CA3939" stroke-width="6"></line>
+            <path d="M1,74.5 C12.600106,66.4000042 20.8408467,61.398051 25.7222222,59.4941406 C29.1342691,58.1633207 33.5124551,56.4113995 40.2330078,54.5 C42.1623873,53.9512631 48.2032366,53.1179298 58.3555556,52 C51.7995273,58.5699635 66.2382859,59.312151 75,63.25 C83.7617141,67.187849 79.8711035,73.9456615 90,74.5" id="Path-Copy-4" stroke="#444141" stroke-width="2" fill="#FEADAD"></path>
+            <path d="M88.8230637,75.5 L71.1503364,183.5 L18.8496636,183.5 L1.17693635,75.5 L88.8230637,75.5 Z" id="Rectangle" stroke="#444141" stroke-width="2" fill="url(#linearGradient-1)"></path>
+            <path d="M89,74.5 C89,49.6471863 69.300529,29.5 45,29.5 C20.699471,29.5 1,49.6471863 1,74.5" id="Path" stroke="#444141" stroke-width="2"></path>
+            <ellipse id="Oval" fill="#444141" cx="17.5" cy="90" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-124" fill="#444141" cx="10.5" cy="83" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-122" fill="#444141" cx="11.5" cy="99" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-112" fill="#444141" cx="26.5" cy="99" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-123" fill="#444141" cx="28.5" cy="85" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-120" fill="#444141" cx="16.5" cy="109" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-113" fill="#444141" cx="36.5" cy="89" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-114" fill="#444141" cx="35.5" cy="109" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-115" fill="#444141" cx="51.5" cy="90" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-125" fill="#444141" cx="45.5" cy="83" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-116" fill="#444141" cx="53.5" cy="109" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-121" fill="#444141" cx="73.5" cy="112" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-117" fill="#444141" cx="46.5" cy="101" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-126" fill="#444141" cx="38.5" cy="101" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-118" fill="#444141" cx="63.5" cy="99" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-127" fill="#444141" cx="60.5" cy="84" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-119" fill="#444141" cx="68.5" cy="89" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-128" fill="#444141" cx="77.5" cy="84" rx="1.5" ry="3"></ellipse>
+            <ellipse id="Oval-Copy-129" fill="#444141" cx="76.5" cy="100" rx="1.5" ry="3"></ellipse>
+        </g>
+    </g>
+</svg>
