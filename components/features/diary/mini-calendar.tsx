@@ -8,10 +8,6 @@ interface RecordDay {
   drinks: { name: string; brandName: string; rating?: number }[];
 }
 
-function weekdayOffset(year: number, month: number, day: number) {
-  return new Date(year, month, day).getDate();
-}
-
 export function MiniCalendar({ records }: { records: RecordDay[] }) {
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
