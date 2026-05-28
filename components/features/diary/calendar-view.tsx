@@ -6,18 +6,23 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface RecordDay {
-  date: string; // YYYY-MM-DD
+  date: string;
   drinks: { name: string; brandName: string; rating?: number }[];
+}
+
+function weekdayOffset(year: number, month: number, day: number) {
+  // 0=Sun .. 6=Sat
+  return new Date(year, month, day).getDay();
 }
 
 export function CalendarView({ records }: { records: RecordDay[] }) {
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
-  const [month, setMonth] = useState(today.getMonth()); // 0-indexed
+  const [month, setMonth] = useState(today.getMonth());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const firstDayOfWeek = new Date(year, month, 1).getDay(); // 0=Sun
+  const firstDayOfWeek = weekdayOffset(year, month, 1);
 
   const recordMap = useMemo(() => {
     const map = new Map<string, RecordDay>();
@@ -30,21 +35,19 @@ export function CalendarView({ records }: { records: RecordDay[] }) {
     else setMonth(month - 1);
     setSelectedDate(null);
   };
-
   const nextMonth = () => {
     if (month === 11) { setMonth(0); setYear(year + 1); }
     else setMonth(month + 1);
     setSelectedDate(null);
   };
 
-  const monthLabel = `${year} 年 ${month + 1} 月`;
+  const monthLabel = `${year}年${month + 1}月`;
   const dayHeaders = ["日", "一", "二", "三", "四", "五", "六"];
-
+  const todayStr = today.toISOString().slice(0, 10);
   const selectedRecord = selectedDate ? recordMap.get(selectedDate) : null;
 
   return (
     <div className="mb-6">
-      {/* 月份导航 */}
       <div className="flex items-center justify-between mb-3">
         <button onClick={prevMonth} className="p-1 rounded hover:bg-muted transition-colors">
           <ChevronLeft className="size-4" />
@@ -55,9 +58,8 @@ export function CalendarView({ records }: { records: RecordDay[] }) {
         </button>
       </div>
 
-      {/* 日历网格 */}
       <Card>
-        <CardContent className="p-3">
+        <CardContent className="p-2">
           {/* 星期头 */}
           <div className="grid grid-cols-7 mb-1">
             {dayHeaders.map((d) => (
@@ -68,43 +70,52 @@ export function CalendarView({ records }: { records: RecordDay[] }) {
           </div>
 
           {/* 日期格子 */}
-          <div className="grid grid-cols-7 gap-px">
-            {/* 空白填充 */}
+          <div className="grid grid-cols-7 gap-0.5">
             {Array.from({ length: firstDayOfWeek }).map((_, i) => (
-              <div key={`empty-${i}`} className="aspect-square" />
+              <div key={`e-${i}`} className="h-[52px]" />
             ))}
 
-            {/* 日期 */}
             {Array.from({ length: daysInMonth }).map((_, i) => {
               const day = i + 1;
               const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-              const hasRecords = recordMap.has(dateStr);
               const dayData = recordMap.get(dateStr);
-              const isToday = dateStr === today.toISOString().slice(0, 10);
+              const hasRecords = !!dayData;
+              const isToday = dateStr === todayStr;
               const isSelected = dateStr === selectedDate;
+              const count = dayData?.drinks.length || 0;
+              const firstDrink = dayData?.drinks[0];
 
               return (
                 <button
                   key={day}
                   type="button"
                   onClick={() => hasRecords && setSelectedDate(isSelected ? null : dateStr)}
-                  className={`aspect-square flex flex-col items-center justify-center rounded-md text-xs transition-colors ${
+                  className={`h-[52px] rounded-md flex flex-col items-center justify-start pt-1 gap-0.5 transition-colors relative ${
                     isSelected
                       ? "bg-primary text-primary-foreground"
                       : isToday
-                        ? "bg-primary/10 text-primary font-bold"
+                        ? "bg-primary/10"
                         : hasRecords
-                          ? "hover:bg-accent"
-                          : "text-muted-foreground/40"
+                          ? "hover:bg-accent/50"
+                          : ""
                   }`}
                 >
-                  <span className={hasRecords ? "font-semibold" : ""}>{day}</span>
-                  {hasRecords && (
-                    <div className="flex gap-0.5 mt-0.5">
-                      {dayData!.drinks.slice(0, 3).map((_, j) => (
-                        <span key={j} className="w-1 h-1 rounded-full bg-primary" />
-                      ))}
-                    </div>
+                  <span className={`text-[11px] leading-none ${isToday && !isSelected ? "text-primary font-bold" : hasRecords ? "font-semibold" : "text-muted-foreground/40"}`}>
+                    {day}
+                  </span>
+                  {firstDrink && (
+                    <span className={`text-[9px] leading-tight truncate w-[90%] text-center ${
+                      isSelected ? "text-primary-foreground/80" : "text-muted-foreground"
+                    }`}>
+                      {firstDrink.brandName.length <= 3 ? firstDrink.brandName : firstDrink.name}
+                    </span>
+                  )}
+                  {count > 1 && (
+                    <span className={`absolute top-0.5 right-0.5 text-[8px] font-bold rounded-full w-4 h-4 flex items-center justify-center ${
+                      isSelected ? "bg-primary-foreground/30 text-primary-foreground" : "bg-primary text-primary-foreground"
+                    }`}>
+                      {count}
+                    </span>
                   )}
                 </button>
               );
@@ -116,18 +127,16 @@ export function CalendarView({ records }: { records: RecordDay[] }) {
       {/* 选中日期详情 */}
       {selectedRecord && (
         <div className="mt-3 space-y-2">
-          <p className="text-xs text-muted-foreground font-medium">
-            {selectedRecord.date}
-          </p>
+          <p className="text-xs text-muted-foreground font-medium">{selectedRecord.date}</p>
           {selectedRecord.drinks.map((d, i) => (
             <Card key={i} className="shadow-sm">
               <CardContent className="py-2.5 px-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Badge variant="secondary" className="text-[10px]">{d.brandName}</Badge>
-                  <span className="text-sm font-medium">{d.name}</span>
+                <div className="flex items-center gap-2 min-w-0">
+                  <Badge variant="secondary" className="text-[10px] shrink-0">{d.brandName}</Badge>
+                  <span className="text-sm font-medium truncate">{d.name}</span>
                 </div>
                 {d.rating && (
-                  <span className="text-xs text-amber-500 font-medium">★ {d.rating}</span>
+                  <span className="text-xs text-amber-500 font-medium shrink-0 ml-2">★ {d.rating}</span>
                 )}
               </CardContent>
             </Card>

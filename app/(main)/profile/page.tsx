@@ -5,6 +5,7 @@ import { LogOut, Star, Coffee, Settings } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { MiniCalendar } from "@/components/features/diary/mini-calendar";
 
 const catLabel: Record<string, string> = {
   milk_tea: "奶茶",
@@ -81,6 +82,24 @@ export default async function ProfilePage() {
     .order("created_at", { ascending: false })
     .limit(5);
 
+  // 日历数据（全部记录用于统计）
+  const { data: allRecords } = await supabase
+    .from("records")
+    .select("drank_at, drinks:drink_id(name), brands:brand_id(name), rating")
+    .eq("user_id", user.id);
+
+  const calendarDays = new Map<string, { name: string; brandName: string; rating?: number }[]>();
+  allRecords?.forEach((r: any) => {
+    const date = r.drank_at || r.created_at?.slice(0, 10);
+    if (!calendarDays.has(date)) calendarDays.set(date, []);
+    calendarDays.get(date)!.push({
+      name: r.drinks?.name || "未知",
+      brandName: r.brands?.name || "未知",
+      rating: r.rating,
+    });
+  });
+  const calendarData = Array.from(calendarDays.entries()).map(([date, drinks]) => ({ date, drinks }));
+
   return (
     <div className="mx-auto max-w-lg px-4 py-6">
       {/* 个人信息卡片 */}
@@ -117,6 +136,15 @@ export default async function ProfilePage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* 吨吨日历 */}
+      {calendarData.length > 0 && (
+        <Card className="mb-4">
+          <CardContent className="pt-4">
+            <MiniCalendar records={calendarData} />
+          </CardContent>
+        </Card>
+      )}
 
       {/* 最近吨吨 */}
       <h3 className="text-sm font-medium text-muted-foreground mb-2">最近吨吨</h3>
