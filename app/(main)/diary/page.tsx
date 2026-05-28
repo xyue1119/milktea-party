@@ -5,6 +5,7 @@ import { BookHeart, Star, MapPin, Clock, MessageCircle, Heart } from "lucide-rea
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { DeleteButton } from "@/components/features/diary/delete-button";
+import { CalendarView } from "@/components/features/diary/calendar-view";
 
 export default async function DiaryPage() {
   const supabase = await createClient();
@@ -21,6 +22,19 @@ export default async function DiaryPage() {
     .limit(50);
 
   const hasRecords = records && records.length > 0;
+
+  // 日历数据：按日期分组
+  const calendarDays = new Map<string, { name: string; brandName: string; rating?: number }[]>();
+  records?.forEach((r: any) => {
+    const date = r.drank_at || r.created_at?.slice(0, 10);
+    if (!calendarDays.has(date)) calendarDays.set(date, []);
+    calendarDays.get(date)!.push({
+      name: r.drinks?.name || "未知饮品",
+      brandName: r.brands?.name || "未知品牌",
+      rating: r.rating,
+    });
+  });
+  const calendarData = Array.from(calendarDays.entries()).map(([date, drinks]) => ({ date, drinks }));
 
   // 互动计数
   const recordIds = records?.map((r: any) => r.id) || [];
@@ -54,6 +68,9 @@ export default async function DiaryPage() {
           🧋 喝一杯
         </Link>
       </div>
+
+      {/* 吨吨日历 */}
+      {calendarData.length > 0 && <CalendarView records={calendarData} />}
 
       {!hasRecords ? (
         <Card className="border-dashed">
