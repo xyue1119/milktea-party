@@ -83,7 +83,8 @@ export default async function RecordDetailPage({ params }: { params: Promise<{ r
               {record.size && (
                 <span>
                   {record.size === "small" ? "小杯" :
-                   record.size === "medium" ? "中杯" : "大杯"}
+                   record.size === "medium" ? "中杯" :
+                   record.size === "large" ? "大杯" : "超大杯"}
                 </span>
               )}
               {record.price_paid && <span>¥{record.price_paid}</span>}

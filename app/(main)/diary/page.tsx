@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { BookHeart, Star, MapPin, Clock, MessageCircle } from "lucide-react";
+import { BookHeart, Star, MapPin, Clock, MessageCircle, Heart } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { DeleteButton } from "@/components/features/diary/delete-button";
@@ -25,13 +25,17 @@ export default async function DiaryPage() {
   // 互动计数
   const recordIds = records?.map((r: any) => r.id) || [];
   const commentCounts = new Map<string, number>();
+  const likeCounts = new Map<string, number>();
   if (recordIds.length > 0) {
-    const { data: comments } = await supabase
-      .from("comments")
-      .select("record_id")
-      .in("record_id", recordIds);
+    const [{ data: comments }, { data: likes }] = await Promise.all([
+      supabase.from("comments").select("record_id").in("record_id", recordIds),
+      supabase.from("likes").select("record_id").in("record_id", recordIds),
+    ]);
     comments?.forEach((c: any) => {
       commentCounts.set(c.record_id, (commentCounts.get(c.record_id) || 0) + 1);
+    });
+    likes?.forEach((l: any) => {
+      likeCounts.set(l.record_id, (likeCounts.get(l.record_id) || 0) + 1);
     });
   }
 
@@ -116,7 +120,8 @@ export default async function DiaryPage() {
                       {r.size && (
                         <span>
                           {r.size === "small" ? "小杯" :
-                           r.size === "medium" ? "中杯" : "大杯"}
+                           r.size === "medium" ? "中杯" :
+                           r.size === "large" ? "大杯" : "超大杯"}
                         </span>
                       )}
                       {r.price_paid && <span>¥{r.price_paid}</span>}
@@ -136,8 +141,14 @@ export default async function DiaryPage() {
                       className={buttonVariants({ size: "sm", variant: "outline" })}
                     >
                       <MessageCircle className="size-3.5" />
-                      {(commentCounts.get(r.id) || 0) > 0 ? `${commentCounts.get(r.id)} 条讨论` : "讨论"}
+                      {commentCounts.get(r.id) || 0}
                     </Link>
+                    {(likeCounts.get(r.id) || 0) > 0 && (
+                      <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                        <Heart className="size-3 text-rose-400 fill-rose-400" />
+                        {likeCounts.get(r.id)}
+                      </span>
+                    )}
                   </div>
                   <DeleteButton recordId={r.id} drinkId={r.drink_id} />
                 </div>

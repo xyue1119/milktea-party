@@ -20,6 +20,7 @@ import { Star, ArrowLeft, Loader2, Check, ChevronsUpDown, Plus } from "lucide-re
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { pinyin } from "pinyin-pro";
+import { toast } from "sonner";
 
 const req = "text-red-400";
 
@@ -196,6 +197,9 @@ function NewRecordForm() {
 
       router.push("/diary");
       router.refresh();
+      toast.success("吨吨已记录！🧋", {
+        description: `${selectedBrand!.name} · ${selectedDrink?.name || drinkSearch.trim()}`,
+      });
     } catch (err: any) {
       alert("保存失败：" + (err.message || "未知错误"));
     } finally {
@@ -470,6 +474,7 @@ function NewRecordForm() {
               {[
                 { k: "medium", v: "中杯" },
                 { k: "large", v: "大杯" },
+                { k: "extra_large", v: "超大杯" },
               ].map(({ k, v }) => (
                 <Badge
                   key={k}

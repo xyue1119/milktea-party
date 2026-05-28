@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Star } from "lucide-react";
+import { ArrowLeft, Star, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -69,11 +69,12 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ br
       ) : (
         <div className="space-y-2 mb-6">
           {drinks.map((d) => (
-            <div
+            <Link
               key={d.id}
-              className="flex items-center justify-between rounded-lg border px-3 py-2.5"
+              href={`/catalog/drinks/${d.id}`}
+              className="flex items-center justify-between rounded-lg border px-3 py-2.5 hover:bg-accent/50 transition-colors"
             >
-              <Link href={`/catalog/drinks/${d.id}`} className="flex-1 min-w-0 block">
+              <div className="min-w-0">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium truncate">{d.name}</span>
                   <Badge variant="secondary" className="text-[10px] shrink-0">
@@ -91,14 +92,9 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ br
                     <span className="text-xs text-muted-foreground">{d.review_count} 条评价</span>
                   )}
                 </div>
-              </Link>
-              <Link
-                href={`/diary/new?brandId=${brandId}&drinkName=${encodeURIComponent(d.name)}`}
-                className={buttonVariants({ size: "sm", variant: "outline" })}
-              >
-                🧋 喝一杯
-              </Link>
-            </div>
+              </div>
+              <ChevronRight className="size-4 text-muted-foreground/40 shrink-0 ml-2" />
+            </Link>
           ))}
         </div>
       )}
