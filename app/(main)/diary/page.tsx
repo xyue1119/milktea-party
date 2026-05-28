@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { BookHeart, Star, MapPin, Clock, MessageCircle, Heart } from "lucide-react";
+import { BookHeart, Star, MapPin, Clock, MessageCircle, Heart, Pencil } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { DeleteButton } from "@/components/features/diary/delete-button";
@@ -165,7 +165,15 @@ export default async function DiaryPage() {
                       {likeCounts.get(r.id) || 0}
                     </span>
                   </div>
-                  <DeleteButton recordId={r.id} drinkId={r.drink_id} />
+                  <div className="flex items-center gap-1">
+                    <Link
+                      href={`/diary/${r.id}/edit`}
+                      className={buttonVariants({ size: "sm", variant: "ghost" })}
+                    >
+                      <Pencil className="size-3.5" />
+                    </Link>
+                    <DeleteButton recordId={r.id} drinkId={r.drink_id} />
+                  </div>
                 </div>
               </CardContent>
             </Card>
