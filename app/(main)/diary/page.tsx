@@ -143,12 +143,10 @@ export default async function DiaryPage() {
                       <MessageCircle className="size-3.5" />
                       {commentCounts.get(r.id) || 0}
                     </Link>
-                    {(likeCounts.get(r.id) || 0) > 0 && (
-                      <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                        <Heart className="size-3 text-rose-400 fill-rose-400" />
-                        {likeCounts.get(r.id)}
-                      </span>
-                    )}
+                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                      <Heart className="size-3 text-rose-400 fill-rose-400" />
+                      {likeCounts.get(r.id) || 0}
+                    </span>
                   </div>
                   <DeleteButton recordId={r.id} drinkId={r.drink_id} />
                 </div>
