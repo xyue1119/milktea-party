@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #fdf2f8 0%, #f0f9ff 50%, #fefce8 100%);
+    display: flex; justify-content: center; align-items: center;
+    width: 750px; padding: 24px 0; overflow: hidden;
+  }
+  .card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px 40px;
+    width: 670px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  }
+  .header { text-align: center; margin-bottom: 22px; }
+  .emoji { font-size: 44px; line-height: 1.2; }
+  .title { font-size: 28px; font-weight: 800; color: #1a1a2e; }
+  .subtitle { font-size: 14px; color: #94a3b8; margin-top: 2px; }
+
+  .section { margin-bottom: 20px; }
+  .section-title { font-size: 20px; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+  .section-body { font-size: 16px; color: #475569; line-height: 1.7; padding-left: 2px; }
+  .tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #fbcfe8, #fde68a);
+    color: #b45389;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 1px 9px;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+
+  .divider { height: 1px; background: #f1f5f9; margin: 20px 0; }
+
+  .footer {
+    text-align: center;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .url { font-size: 20px; font-weight: 700; color: #0f172a; letter-spacing: -0.3px; }
+  .cta { font-size: 14px; color: #64748b; margin-top: 3px; }
+
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; vertical-align: middle; }
+  .dot.pink { background: #f472b6; }
+  .dot.blue { background: #60a5fa; }
+  .dot.amber { background: #fbbf24; }
+  .dot.green { background: #34d399; }
+  .dot.purple { background: #a78bfa; }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="header">
+    <div class="emoji">🧋</div>
+    <div class="title">吨吨派对 · 更新日志 v1.2</div>
+    <div class="subtitle">2026.06.16</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="dot blue"></span>日期修改</div>
+    <div class="section-body">
+      新建 & 编辑吨吨日记新增<span class="tag">日期选择器</span><br>
+      默认今天，可补录任意历史日期，再也不用当天补作业了
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="dot green"></span>找回密码</div>
+    <div class="section-body">
+      登录页新增<span class="tag">忘记密码？</span>链接<br>
+      输入邮箱 → 收重置邮件 → 设新密码 → 登录，全程自助完成
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="dot purple"></span>体验优化</div>
+    <div class="section-body">
+      <span class="tag">并行加载</span>编辑页数据请求合并，减少等待时间<br>
+      <span class="tag">骨架屏</span>编辑 / 新建页加载时显示完整占位布局
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="footer">
+    <div class="url">milkteaparty.netlify.app</div>
+    <div class="cta">打开即用，无需下载 · 奶茶自由记录</div>
+  </div>
+
+</div>
+<script>
+  const card = document.querySelector('.card');
+  const rect = card.getBoundingClientRect();
+  document.body.style.height = (rect.bottom + 24) + 'px';
+</script>
+</body>
+</html>
