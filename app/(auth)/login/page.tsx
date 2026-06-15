@@ -66,6 +66,11 @@ export default function LoginPage() {
               required
             />
           </div>
+          <div className="text-right">
+            <Link href="/forgot-password" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              忘记密码？
+            </Link>
+          </div>
           {error && (
             <p className="text-sm text-destructive">{error}</p>
           )}

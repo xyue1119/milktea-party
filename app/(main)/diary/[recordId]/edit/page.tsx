@@ -41,6 +41,7 @@ function EditRecordForm() {
   const [isNewDrink, setIsNewDrink] = useState(false);
 
   const [rating, setRating] = useState(0);
+  const [drankAt, setDrankAt] = useState("");
   const [comment, setComment] = useState("");
   const [sugarLevel, setSugarLevel] = useState("");
   const [iceLevel, setIceLevel] = useState("");
@@ -80,6 +81,7 @@ function EditRecordForm() {
           setDrinkSearch(drink.name);
         }
         setRating(data.rating || 0);
+        setDrankAt(data.drank_at || "");
         setComment(data.note || "");
         setSugarLevel(data.sugar_level || "");
         setIceLevel(data.ice_level || "");
@@ -184,6 +186,7 @@ function EditRecordForm() {
           brand_id: selectedBrand!.id,
           rating,
           note: comment.trim(),
+          drank_at: drankAt,
           sugar_level: sugarLevel || null,
           ice_level: iceLevel || null,
           size: size || null,
@@ -393,6 +396,17 @@ function EditRecordForm() {
           {isNewDrink && (
             <p className="text-xs text-primary/80">新饮品「{drinkSearch.trim()}」，提交时自动收录</p>
           )}
+        </div>
+
+        {/* 日期 */}
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium">日期</label>
+          <Input
+            type="date"
+            value={drankAt}
+            onChange={(e) => setDrankAt(e.target.value)}
+            className="w-full"
+          />
         </div>
 
         {/* 评分 * */}

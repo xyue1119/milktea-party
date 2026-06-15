@@ -40,6 +40,7 @@ function NewRecordForm() {
   const [selectedDrink, setSelectedDrink] = useState<{ id: string; name: string } | null>(null);
   const [isNewDrink, setIsNewDrink] = useState(false);
 
+  const [drankAt, setDrankAt] = useState(new Date().toISOString().slice(0, 10));
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [sugarLevel, setSugarLevel] = useState("");
@@ -173,6 +174,7 @@ function NewRecordForm() {
         brand_id: selectedBrand!.id,
         rating,
         note: comment.trim(),
+        drank_at: drankAt,
         sugar_level: sugarLevel || null,
         ice_level: iceLevel || null,
         size: size || null,
@@ -384,6 +386,17 @@ function NewRecordForm() {
           {isNewDrink && (
             <p className="text-xs text-primary/80">新饮品「{drinkSearch.trim()}」，提交时自动收录</p>
           )}
+        </div>
+
+        {/* 日期 */}
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium">日期</label>
+          <Input
+            type="date"
+            value={drankAt}
+            onChange={(e) => setDrankAt(e.target.value)}
+            className="w-full"
+          />
         </div>
 
         {/* 评分 * */}

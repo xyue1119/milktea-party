@@ -29,7 +29,9 @@ export async function proxy(request: NextRequest) {
 
   const isAuthPage = request.nextUrl.pathname.startsWith("/login")
     || request.nextUrl.pathname.startsWith("/signup")
-    || request.nextUrl.pathname.startsWith("/callback");
+    || request.nextUrl.pathname.startsWith("/callback")
+    || request.nextUrl.pathname.startsWith("/forgot-password")
+    || request.nextUrl.pathname.startsWith("/reset-password");
 
   // 根路径 → 重定向到日记
   if (request.nextUrl.pathname === "/") {
