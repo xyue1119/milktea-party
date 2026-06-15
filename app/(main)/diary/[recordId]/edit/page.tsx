@@ -54,50 +54,59 @@ function EditRecordForm() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  // Load brands
+  // Load brands + record in parallel, then pre-fetch drinks
   useEffect(() => {
-    supabase.from("brands").select("id, name").order("name").then(({ data }) => {
-      if (data) {
-        data.sort((a, b) => a.name.localeCompare(b.name, "zh"));
-        setBrands(data);
+    // Fetch brands and record concurrently
+    Promise.all([
+      supabase.from("brands").select("id, name").order("name"),
+      supabase
+        .from("records")
+        .select("*, drinks:drink_id(id, name, brand_id), brands:brand_id(id, name)")
+        .eq("id", recordId)
+        .single(),
+    ]).then(([{ data: brandsData }, { data: recordData }]) => {
+      // Brands
+      if (brandsData) {
+        brandsData.sort((a, b) => a.name.localeCompare(b.name, "zh"));
+        setBrands(brandsData);
       }
-    });
-  }, []);
 
-  // Load existing record
-  useEffect(() => {
-    supabase
-      .from("records")
-      .select("*, drinks:drink_id(id, name, brand_id), brands:brand_id(id, name)")
-      .eq("id", recordId)
-      .single()
-      .then(({ data }) => {
-        if (!data) return;
-        const brand = (data.brands as any) || { id: data.brand_id, name: "未知品牌" };
-        setSelectedBrand({ id: brand.id || data.brand_id, name: brand.name || "未知品牌" });
-        const drink = (data.drinks as any);
-        if (drink) {
-          setSelectedDrink({ id: drink.id, name: drink.name });
-          setDrinkSearch(drink.name);
-        }
-        setRating(data.rating || 0);
-        setDrankAt(data.drank_at || "");
-        setComment(data.note || "");
-        setSugarLevel(data.sugar_level || "");
-        setIceLevel(data.ice_level || "");
-        setSize(data.size || "");
-        setPrice(data.price_paid ? String(data.price_paid) : "");
-        setLocation(data.location || "");
-        setLoading(false);
-      });
+      // Record
+      if (!recordData) return;
+      const brand = (recordData.brands as any) || { id: recordData.brand_id, name: "未知品牌" };
+      const brandId = brand.id || recordData.brand_id;
+      setSelectedBrand({ id: brandId, name: brand.name || "未知品牌" });
+      const drink = (recordData.drinks as any);
+      if (drink) {
+        setSelectedDrink({ id: drink.id, name: drink.name });
+        setDrinkSearch(drink.name);
+      }
+      setRating(recordData.rating || 0);
+      setDrankAt(recordData.drank_at || "");
+      setComment(recordData.note || "");
+      setSugarLevel(recordData.sugar_level || "");
+      setIceLevel(recordData.ice_level || "");
+      setSize(recordData.size || "");
+      setPrice(recordData.price_paid ? String(recordData.price_paid) : "");
+      setLocation(recordData.location || "");
+
+      // Pre-fetch drinks for this brand immediately
+      supabase
+        .from("drinks")
+        .select("id, name")
+        .eq("brand_id", brandId)
+        .eq("is_active", true)
+        .order("name")
+        .then(({ data: drinksData }) => {
+          if (drinksData) setDrinks(drinksData);
+          setLoading(false);
+        });
+    });
   }, [recordId]);
 
-  // Load drinks for selected brand
+  // Reload drinks when brand changes (user switches brand)
   useEffect(() => {
-    if (!selectedBrand) {
-      setDrinks([]);
-      return;
-    }
+    if (!selectedBrand) { setDrinks([]); return; }
     supabase
       .from("drinks")
       .select("id, name")
@@ -215,11 +224,79 @@ function EditRecordForm() {
             <ArrowLeft className="size-5" />
           </Link>
           <h2 className="text-lg font-bold">编辑吨吨</h2>
+          <Loader2 className="size-4 animate-spin text-muted-foreground ml-1" />
+          <span className="text-xs text-muted-foreground animate-pulse">加载中...</span>
         </div>
-        <div className="space-y-5 animate-pulse">
-          <div className="h-12 bg-muted rounded-lg" />
-          <div className="h-12 bg-muted rounded-lg" />
-          <div className="h-32 bg-muted rounded-lg" />
+
+        <div className="space-y-5">
+          {/* 品牌 */}
+          <div className="space-y-1.5">
+            <div className="h-4 w-8 rounded bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+            <div className="h-11 rounded-lg bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+          </div>
+          {/* 饮品 */}
+          <div className="space-y-1.5">
+            <div className="h-4 w-8 rounded bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+            <div className="h-11 rounded-lg bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+          </div>
+          {/* 日期 */}
+          <div className="space-y-1.5">
+            <div className="h-4 w-8 rounded bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+            <div className="h-11 rounded-lg bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+          </div>
+          {/* 评分 */}
+          <div className="space-y-1.5">
+            <div className="h-4 w-8 rounded bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+            <div className="flex gap-1">
+              {[1, 2, 3, 4, 5].map((n) => (
+                <div key={n} className="size-7 rounded bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+              ))}
+            </div>
+          </div>
+          {/* 评价 */}
+          <div className="space-y-1.5">
+            <div className="h-4 w-8 rounded bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+            <div className="h-24 rounded-lg bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+          </div>
+          {/* 甜度/温度/规格 */}
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-1.5">
+              <div className="h-3 w-8 rounded bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+              <div className="flex gap-1">
+                <div className="h-6 w-10 rounded-full bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+                <div className="h-6 w-10 rounded-full bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+                <div className="h-6 w-10 rounded-full bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <div className="h-3 w-8 rounded bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+              <div className="flex gap-1">
+                <div className="h-6 w-8 rounded-full bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+                <div className="h-6 w-8 rounded-full bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+                <div className="h-6 w-8 rounded-full bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <div className="h-3 w-8 rounded bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+              <div className="flex gap-1">
+                <div className="h-6 w-10 rounded-full bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+                <div className="h-6 w-10 rounded-full bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+              </div>
+            </div>
+          </div>
+          {/* 价格/门店 */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <div className="h-3 w-12 rounded bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+              <div className="h-10 rounded-lg bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+            </div>
+            <div className="space-y-1.5">
+              <div className="h-3 w-8 rounded bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+              <div className="h-10 rounded-lg bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
+            </div>
+          </div>
+          {/* 提交按钮 */}
+          <div className="h-11 rounded-lg bg-linear-to-r from-muted via-muted-foreground/15 to-muted bg-[length:200%_100%] animate-shimmer" />
         </div>
       </div>
     );
